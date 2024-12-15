@@ -3,38 +3,43 @@ import requests
 
 backend_host = 'http://localhost:1234'
 
-base = False
+rows = [{'id': 'none', 'name': 'none'}]
+columns = [{'label': 'id', 'field': 'id'}, {'label': 'name', 'field': 'name'}]
+
+button_save = ui.button(text='Load users', on_click=lambda: update_users_table())
+
+table = ui.table(columns=columns, rows=rows, )
+
+name_input = ui.input('NAME')
+surname_input = ui.input('SURNAME')
+button_add_user = ui.button(text='Add user', on_click=lambda: add_user())
+
+id_input = ui.input('ID')
+button_delete = ui.button(text='Remove user', on_click=lambda: remove_user())
 
 
-def main():
-    def update_users_table():
-        response = requests.get(f"{backend_host}/get_users")
-        users_dict = response.json()
-        grid_test.rows = [{'id': str(k), 'name': str(v)} for k, v in users_dict.items()]
-        grid_test.update()
-
-    # def add_user(a1, a2):
-    #     json_gen = {a1: a2}
-    #     response = requests.post(f"{backend_host}/add_user/", json=json_gen)
-    #     print()
-
-    rows = []
-    columns = [{'name': 'id', 'label': 'id', 'field': 'id'}, {'name': 'name', 'label': 'name', 'field': 'name'}]
-    grid_test = ui.table(rows=rows, columns=columns)
-    ui.button('Get list of users', on_click=update_users_table())
-
-    a1 = ui.input(label='Name', placeholder='...some name...',
-                  validation={'Wrong input': lambda value: 1 < len(value) < 20})
-
-    a2 = ui.input(label='Name', placeholder='...some surname...',
-                  validation={'Wrong input': lambda value: 1 < len(value) < 20})
+def remove_user():
+    response = requests.delete(f'{backend_host}/delete_user/', params=f'id={id_input.value}')
+    update_users_table()
 
 
+def clear_user_input():
+    id_input.value = ''
+    name_input.value = ''
+    surname_input.value = ''
 
-    ui.button('Add user', on_click=lambda: requests.post(f'{backend_host}/add_user/', timeout=1, json={a1.value:a2.value}))
 
-    ui.run()
+def add_user():
+    response = requests.post(f'{backend_host}/add_user/', json={'name': name_input.value, 'surname': surname_input.value})
+    update_users_table()
 
 
-if __name__ in {"__main__", "__mp_main__"}:
-    main()
+def update_users_table():
+    response = requests.get(f"{backend_host}/get_users")
+    response_dict = response.json()
+    table.rows = [{'id': str(k), 'name': str(v)} for k, v in response_dict.items()]
+    table.update()
+    clear_user_input()
+
+
+ui.run(port=1235)

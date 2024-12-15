@@ -129,7 +129,7 @@ def make_app():
                 cursor.execute(command_new_user)
                 list_of_users = cursor.fetchall()
 
-                print(list_of_users, 'asdfasdfasdf!')
+                # print(list_of_users, 'asdfasdfasdf!')
 
                 if list_of_users == []:
                     command_new_user = f"insert into newtable values (0, 'root', 'root')"
@@ -178,7 +178,7 @@ def make_app():
                 cursor.execute(command_new_user)
                 users_list = cursor.fetchall()
 
-            print(users_list)
+            # print(users_list)
 
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
@@ -188,6 +188,7 @@ def make_app():
 
     @application.delete("/delete_user/")
     async def add_user(id: int):
+        # print(id)
 
         # check - if user exists
         # if not - throw error
