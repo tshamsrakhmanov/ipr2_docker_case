@@ -1,6 +1,8 @@
 from nicegui import ui
 import requests
 
+# Хост, где будем дёргать ручки апи
+# используемое имя - по хостнэйму в докере
 backend_host = 'http://backend:1234'
 
 with ui.row() as user_table_view:

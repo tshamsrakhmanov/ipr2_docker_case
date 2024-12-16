@@ -7,7 +7,9 @@ class User(BaseModel):
     name: str
     surname: str
 
-
+# декларация хоста\порта для подключения к бд
+# ВАЖНО: имя хоста - это хостнейм внутри докера
+# либо обращение по базовому (выдаётся в docker ps) либо задаётся вручную hostname в compose
 HOSTNAME = 'postgres'
 HOST_PORT = '5432'
 
