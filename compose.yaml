@@ -28,7 +28,8 @@ services:
     tty: true
     stdin_open: true
   backend:
-    build: python_backend/Dockerfile
+    build:
+      dockerfile: ./python_backend/Dockerfile
     ports:
       - "1234:1234"
 volumes:
