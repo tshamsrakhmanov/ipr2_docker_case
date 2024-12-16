@@ -8,8 +8,12 @@ class User(BaseModel):
     surname: str
 
 
+HOSTNAME = 'postgres'
+HOST_PORT = '5432'
+
+
 def make_app():
-    application = FastAPI()
+    application = FastAPI(root_path="/api", docs_url="/")
 
     @application.get("/status")
     async def status():
@@ -20,8 +24,8 @@ def make_app():
 
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -36,8 +40,8 @@ def make_app():
 
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -63,8 +67,8 @@ def make_app():
 
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -90,8 +94,8 @@ def make_app():
 
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -114,8 +118,8 @@ def make_app():
         # check process
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -140,8 +144,8 @@ def make_app():
         # process of add
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -163,8 +167,8 @@ def make_app():
 
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -194,8 +198,8 @@ def make_app():
 
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -215,8 +219,8 @@ def make_app():
 
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'
@@ -234,8 +238,8 @@ def make_app():
         # removal process
         try:
             connection = psycopg2.connect(
-                host='localhost',
-                port='5430',
+                host=HOSTNAME,
+                port=HOST_PORT,
                 user='postgres_user',
                 password='postgres_password',
                 database='postgres_db'

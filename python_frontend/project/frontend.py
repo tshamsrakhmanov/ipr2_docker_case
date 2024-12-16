@@ -1,12 +1,10 @@
 from nicegui import ui
 import requests
 
-backend_host = 'http://localhost:1234'
+backend_host = 'http://backend:1234'
 
 with ui.row() as column1:
-
     with ui.column() as column2:
-
         rows = [{'id': 'none', 'name': 'none'}]
         columns = [{'label': 'id', 'field': 'id'}, {'label': 'name', 'field': 'name'}]
 
@@ -16,10 +14,9 @@ with ui.row() as column1:
         table.set_visibility(False)
 
     with ui.column() as column3:
+        name_input = ui.input('NAME', validation={'Incorrect length (1...20)': lambda value: 1 < len(value) < 20})
+        surname_input = ui.input('SURNAME', validation={'Incorrect length (1...20)': lambda value: 1 < len(value) < 20})
 
-        name_input = ui.input('NAME')
-
-        surname_input = ui.input('SURNAME')
         button_add_user = ui.button(text='Add user', on_click=lambda: add_user())
 
         id_input = ui.input('ID')
@@ -28,17 +25,12 @@ with ui.row() as column1:
 
 def remove_user():
     requests.delete(f'{backend_host}/delete_user/', params=f'id={id_input.value}')
-    id_input.value = ''
-    name_input.value = ''
-    surname_input.value = ''
-    table.set_visibility(False)
+    update_users_table()
+
 
 def add_user():
     requests.post(f'{backend_host}/add_user/', json={'name': name_input.value, 'surname': surname_input.value})
-    id_input.value = ''
-    name_input.value = ''
-    surname_input.value = ''
-    table.set_visibility(False)
+    update_users_table()
 
 
 def update_users_table():
