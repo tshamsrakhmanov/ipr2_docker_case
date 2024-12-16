@@ -3,7 +3,7 @@ import requests
 
 backend_host = 'http://backend:1234'
 
-with ui.row() as column1:
+with ui.row() as user_table_view:
     with ui.column() as column2:
         rows = [{'id': 'none', 'name': 'none'}]
         columns = [{'label': 'id', 'field': 'id'}, {'label': 'name', 'field': 'name'}]
@@ -14,8 +14,12 @@ with ui.row() as column1:
         table.set_visibility(False)
 
     with ui.column() as column3:
-        name_input = ui.input('NAME', validation={'Incorrect length (1...20)': lambda value: 1 < len(value) < 20})
-        surname_input = ui.input('SURNAME', validation={'Incorrect length (1...20)': lambda value: 1 < len(value) < 20})
+        name_input = ui.input(label='NAME',
+                              validation={'Incorrect length (1...20)': lambda value: 1 < len(value) < 20},
+                              placeholder='some name')
+        surname_input = ui.input(label='SURNAME',
+                                 validation={'Incorrect length (1...20)': lambda value: 1 < len(value) < 20},
+                                 placeholder='some surname')
 
         button_add_user = ui.button(text='Add user', on_click=lambda: add_user())
 
@@ -24,13 +28,15 @@ with ui.row() as column1:
 
 
 def remove_user():
-    requests.delete(f'{backend_host}/delete_user/', params=f'id={id_input.value}')
-    update_users_table()
+    if id_input.value is not '':
+        requests.delete(f'{backend_host}/delete_user/', params=f'id={id_input.value}')
+        update_users_table()
 
 
 def add_user():
-    requests.post(f'{backend_host}/add_user/', json={'name': name_input.value, 'surname': surname_input.value})
-    update_users_table()
+    if name_input.value is not '' and surname_input.value is not '':
+        requests.post(f'{backend_host}/add_user/', json={'name': name_input.value, 'surname': surname_input.value})
+        update_users_table()
 
 
 def update_users_table():
@@ -43,6 +49,7 @@ def update_users_table():
     name_input.value = ''
     surname_input.value = ''
     table.update()
+    ui.update()
 
 
 ui.run(port=1235)
