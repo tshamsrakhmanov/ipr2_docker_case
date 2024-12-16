@@ -29,7 +29,6 @@ services:
     stdin_open: true
   backend:
     build: python_backend/Dockerfile
-    image: backend_image
     ports:
       - "1234:1234"
 volumes:
